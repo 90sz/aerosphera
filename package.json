@@ -63,5 +63,5 @@
     "@types/draft-js": "^0.11.18",
     "supabase": "^2.23.4"
   },
-  "homepage": "https://aerosphera.com"
+  "homepage": "."
 }
