@@ -27,7 +27,15 @@ jobs:
         run: npm install
 
       - name: Build
-        run: CI=false npm run build
+        env:
+          REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}
+          REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
+          REACT_APP_CLOUDINARY_CLOUD_NAME: ${{ secrets.REACT_APP_CLOUDINARY_CLOUD_NAME }}
+          REACT_APP_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.REACT_APP_CLOUDINARY_UPLOAD_PRESET }}
+        run: |
+          test -n "$REACT_APP_SUPABASE_URL" || { echo "::error::Missing REACT_APP_SUPABASE_URL repository secret"; exit 1; }
+          test -n "$REACT_APP_SUPABASE_ANON_KEY" || { echo "::error::Missing REACT_APP_SUPABASE_ANON_KEY repository secret"; exit 1; }
+          CI=false npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
